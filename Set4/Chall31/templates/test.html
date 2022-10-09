@@ -1,0 +1,16 @@
+$def with (file, signature)
+
+$if file and signature:
+  <h1>Debug Info</h1>
+  <strong>hmac_key:</strong> $hmac_key <br />
+  <strong>file:</strong> $file <br />
+  <strong>signature:</strong> $signature <br />
+  <strong>hmac_sha1:</strong> $hmac_sha1(hmac_key, fromhex(file)) <br />
+
+  <h1>Status Info</h1>
+  $if insecure_compare(fromhex(signature), fromhex(hmac_sha1(hmac_key, fromhex(file)))):
+    <strong>STATUS:</strong> 400
+  $else:
+    <strong>STATUS:</strong> 500
+$else:
+  Enter <code>?file</code> and <code>?signature</code> in the GET request
